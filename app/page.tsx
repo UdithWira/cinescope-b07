@@ -2,7 +2,7 @@ import HeroBanner from "@/components/landing/hero-banner";
 import Footer from "@/components/shared/footer";
 import MainNav from "@/components/shared/main-nav";
 
-export default function Profile(){
+export default function Homeoage(){
     return(
         <div className="min-h-screen flex flex-col">
             <MainNav />
