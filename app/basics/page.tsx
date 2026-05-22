@@ -1,7 +1,7 @@
 // import Image from "next/image";
 
 import Footer from "@/components/shared/footer";
-import Header from "@/components/shared/header";
+import Header from "@/components/shared/main-nav";
 
 export default function Profile(){
     return(
