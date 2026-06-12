@@ -2,7 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images:{
-    remotePatterns:[new URL("https://react.dev/**")]
+    remotePatterns:[
+      new URL("https://react.dev/**"),
+      new URL("https://m.media-amazon.com/**")
+    ]
   }
 };
 

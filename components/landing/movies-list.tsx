@@ -1,8 +1,19 @@
 import { MOVIES_DATA } from "@/lib/data";
+import { getMovies } from "@/action/movie";
 import MovieCard from "./movie-card";
 
 /**React fragment */
-export function MoviesList(){
+export async function MoviesList(){
+    const movies = await getMovies();
+
+    if(!movies || movies.length === 0){
+        return(
+            <div className="text-muted-foreground text-sm">
+                No movies found.
+            </div>
+        );
+    }
+    
     return(
         <>
             <div className="text-muted-foreground text-sm"> 
