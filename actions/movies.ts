@@ -7,7 +7,7 @@ import type { MoviesActionResponse } from "@/actions/types";
 export async function getMovies() {
   try {
     const response = await fetch(
-      `${process.env.API_BASE_URL}/v1/movies?limit=24`,
+      `${process.env.API_BASSE_URL}/v1/movies?limit=24`,
       {
         method: "GET",
         headers: {
