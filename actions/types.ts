@@ -1,9 +1,3 @@
-export interface MoviesActionResponse {
-    movies: Movie[];
-    message:string;
-    success:boolean;
-}
-
 export interface Movie {
     _id: string;
     title: string;
@@ -17,3 +11,10 @@ export interface Movie {
     directors: string[];
     type: string;
 }
+
+export interface MoviesActionResponse {
+    movies: Movie[];
+    message:string;
+    success:boolean;
+}
+

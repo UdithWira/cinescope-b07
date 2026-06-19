@@ -3,12 +3,12 @@ export interface MovieData {
     title: string;
     plot: string;
     poster: string;
-    genres: string[];
+    genres: readonly string[];
     year: number;
     imdb: {
         rating: number;
     };
     runtime: number;
     type: string;
-    directors: string;
+    directors: readonly string[];
 }
