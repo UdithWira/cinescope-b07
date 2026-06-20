@@ -7,21 +7,27 @@ import {
 } from "@/components/ui/card"
 
 import Image from "next/image";
-
+import { useState } from "react";
 import type { MovieData } from "@/lib/types";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
+import { set } from "better-auth";
 
 interface MovieCardProps {
     movie: MovieData;
 }
 
 export default function MovieCard({movie}: MovieCardProps){
+    const [posterUrl, setPosterUrl] = useState(movie.poster || "/placeholder.svg");
+
     return (
     <Card className="border-primary/20 hover:border-primary/50 transition--colors">
             <div className="aspect-2/3 w-full overflow-hidden">
-                <Image src={movie.poster} alt={`${movie.title} poster`} width={300} height={450} 
-                className="w-full h-full object-cover transition-transform hover:scale-105" />
+                <Image src={posterUrl} alt={`${movie.title} poster`} width={300} height={450} 
+                className="w-full h-full object-cover transition-transform hover:scale-105" 
+                onError={()=>setPosterUrl("/placeholder.svg") 
+                }
+                />
             </div>
             <CardContent className="p-4">
                 <h3 className="line-clamp-1 font-semibold text-base">{movie.title}</h3>
@@ -45,11 +51,15 @@ export default function MovieCard({movie}: MovieCardProps){
                 </div>
             </CardContent>
 
-            <CardFooter>
-                <div>
-                    <span></span>
+            <CardFooter className="flex justify-between p-4 pt-0 border-t-0 bg-transparent">
+                <div className="flex items-center">
+                    <span className="text-primary text-sm font-medium">
+                        ⭐ {movie.imdb.rating || 0}/10
+                    </span>
                 </div>
-                <Button>Details</Button>
+                <Button variant="ghost" className="hover:text-primary rounded-sm cursor-pointer">
+                    Details
+                </Button>
             </CardFooter>
     </Card>);
 }
