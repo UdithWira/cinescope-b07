@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 
-import {useActionState} from "react"
+import {useActionState,useEffect} from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,21 +17,35 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
+  FieldError
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { registerUser } from "@/actions/auth"
+
+import { useRouter } from "next/navigation"
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const initioalState = {
+  const router = useRouter();
+  const initialState = {
     message: null,
     errors: {},
     success: false,
   };
 
-  const [state,formAction,isPernding] = useActionState(registerUser,initioalState);
+
+  const [state,formAction,isPending] = useActionState(registerUser,initialState);
+
+  useEffect(() => {
+    if (state.success) {
+        router.push("/login");
+    }
+    else{
+      console.log("Registration state:", state);
+    }
+  }, [state,router]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -43,17 +57,19 @@ export function RegisterForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={formAction} className="grid w-full gap-6">
             <FieldGroup className="grid gap-4">
               <Field className="gid gap-2">
-                <FieldLabel htmlFor="email">Name</FieldLabel>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
                 <Input
                   id="name"
                   name="name"
                   type="text"
                   placeholder="Enter your full name"
+                  className={cn(state.errors?.name && "border-red-500!")}
                   //required
                 />
+                <FieldError className="text-red-500 text-xs ml-l">{state.errors?.name?.[0]}</FieldError>
               </Field>
               <Field className="grid gap-2">
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -62,8 +78,10 @@ export function RegisterForm({
                   name="email"
                   type="email"
                   placeholder="Enter your email address"
+                  className={cn(state.errors?.email && "border-red-500!")}
                   required
                 />
+                <FieldError className="text-red-500 text-xs ml-l">{state.errors?.email?.[0]}</FieldError>
               </Field>
               <Field className="grid gap-2">
                 <div className="flex items-center">
@@ -74,12 +92,18 @@ export function RegisterForm({
                   >
                     Forgot your password?
                   </a>
+                  <FieldError className="text-red-500 text-xs ml-l">{state.errors?.password?.[0]}</FieldError>
                 </div>
-                <Input id="password" name="password" type="password" placeholder="Enter a Password" required/>
+                <Input id="password" name="password" type="password" placeholder="Enter a Password" 
+                className={cn(state.errors?.password && "border-red-500!")}
+                />
               </Field>
               <Field className="grid gap-2">
-                <Button type="submit">Register</Button>
-                <Button variant="outline" type="button">
+                <FieldError className="text-red-500 text-xs ml-l">{state.errors?.general?.[0]}</FieldError>
+                <Button type="submit" disabled={isPending}>
+                  {isPending ? "Registering..." : "Register"}
+                </Button>
+                <Button variant="outline" type="button" disabled={isPending}>
                   Register with Google
                 </Button>
                 <FieldDescription className="text-center">
