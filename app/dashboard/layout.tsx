@@ -6,7 +6,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
    return (
     <SidebarProvider>
       <AdminSidebar />
-      <main className="flex flex-colw-full">
+      <main className="flex flex-col w-full">
         <AdminHeader />
         {children}
       </main>
