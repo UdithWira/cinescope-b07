@@ -20,7 +20,7 @@ export default function DashboardMoviesPage() {
         </div>
         <div className="h-9 w-full bg-teal-300 rounded-md"></div>
         {/* Movie list or management content goes here */}
-        <MovieData />
+        <MovieData query=""/>
     </div>
   );
 }
